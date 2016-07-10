@@ -85,6 +85,7 @@
  * `git tag`: 显示tag信息，同`git tag -l`； `git tag <tagname>`新建tag； `git tag -d <tagname>`删除tag
  * `git diff`: 显示提交之间、提交和工作区之间等的差异
  * `git merge`: 合并分支，将当前分支与指定分支合并
- * `git pull`: 从远程库中拉取文件，需先提交本地修改
+ * `git pull`: 从远程库中拉取文件
  * `git push`: 将本地信息推送到远程分支，使用`git push
-origin :<branch>`可删除远程分支（慎重使用）； `git push origin <localbranch>:<remotebranch>`将本地分支推送到指定的远程分支； `git push origin <remotebranch>`
+origin :<branch>`可删除远程分支（慎重使用）； `git push origin <localbranch>:<remotebranch>`将本地分支推送到指定的远程分支； `git push --set-upstream origin <branchname>`关联远程分支; `git push origin <remotebranch>`完成关联后可使用此命令推送
+* 其他： `git config --global core.quotepath false`解决中文名称文件显示问题
