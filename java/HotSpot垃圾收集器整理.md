@@ -34,7 +34,7 @@ HotSpot垃圾收集器的分类：
 - 目标是达到一个可控制的吞吐量，吞吐量=运行用户代码的时间/(运行用户代码时间 + 垃圾收集时间)
 - 停顿时间越短越适合与用户交互的程序，而高吞吐量则可以高效利用CPU时间，所以ParallelScavenge收集器适合在后台运算而不需要太多交互的场景
 - 通过-XX:MacGCPauseMillis来控制GC停顿时间，-XX:GCTimeRatio设置吞吐量
-- 通过设置-XX:+UseAdaptiveSizePolicy，不再需要手工设置新生代大小(-Xmn)、Eden和Survivor区的比例(-XX:SurvivorRatio)、晋升老年代的年龄(-XX:PretenureSizeThreshold)等细节参数
+- 通过设置-XX:+UseAdaptiveSizePolicy，不再需要手工设置新生代大小(-Xmn)、Eden和Survivor区的比例(-XX:SurvivorRatio)、晋升老年代的年龄(-XX:MaxTenuringThreshold)等细节参数
 - 与老年代SerialOld和ParallelOld收集器配合使用
 
 ### SerialOld收集器
