@@ -20,5 +20,7 @@
    * `sed 'm,na some words' file`: 在文件的第m到n行每行后插入some words
    * `sed '/root/p' /etc/passwd`: 打印出包含root的行
    * `sed '/^$/d' file`: 去除空行
-   * `sed 's/old/new/g' file`: 将文件中的old替换为new
+   * `sed 's/old/new/' file`: 将文件中的old替换为new，每行的第一处
+   * `sed 's/old/new/g' file`: 将文件中的old替换为new，替换全部
+   * `sed 's/old/new/p' file`: 将文件中的old替换为new，打印出原来行
    * `sed nq file`: 显示文件的前n行
