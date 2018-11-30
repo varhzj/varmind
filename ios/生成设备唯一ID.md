@@ -1,7 +1,6 @@
-### ios 生成设备唯一编号
+# iOS 生成设备唯一编号
 
 官方比较推荐使用广告ID作为设备的唯一ID，但是存在系统更新或用户操作后ID变更信息，所以使用UUID＋keychain进行设备唯一ID生成和保存，尽可能保持一致性，惯例，直接上代码。
-
 
 ``` objective-c
 
@@ -36,6 +35,5 @@
 }
 
 ```
-
 
 注：代码中使用到了KeychainItemWrapper.h和KeychainItemWrapper.m文件，可自行下载导入工程，可能需要修改KeychainItemWrapper.m文件的Compiler Flags值为 -fno-objc-arc

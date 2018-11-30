@@ -1,4 +1,6 @@
-### 添加cookie
+# iOS cookie管理
+
+## 添加cookie
 
 简单起见，直接上代码：
 
@@ -17,7 +19,7 @@ NSMutableDictionary *mailCookieProperties = [NSMutableDictionary dictionary];
 [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:[NSHTTPCookie cookieWithProperties:mailCookieProperties]];
 ```
 
-### 删除cookie
+## 删除cookie
 
 ``` objective-c
 NSHTTPCookie *cookie;

@@ -1,3 +1,5 @@
+# mysql小记
+
 set names utf8;
 
 INSERT INTO table (primarykey, field1, field2, ...)
