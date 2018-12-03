@@ -178,17 +178,24 @@ MergedBeanDefinitionPostProcessor [internalPostProcessors]
                 3. 如果`InstantiationAwareBeanPostProcessor`没有返回代理对象,进入第4步
                 4. `Object beanInstance = doCreateBean(beanName, mbdToUse, args);`创建`Bean`
                     1. [创建`Bean`实例]:`createBeanInstance(beanName, mbd, args);` 实例化`Bean`,利用工厂方法或者对象的构造器创建出`Bean`实例
-                    2. `applyMergedBeanDefinitionPostProcessors(mbd, beanType, beanName);`,调用`[MergedBeanDefinitionPostProcessor]`的`postProcessMergedBeanDefinition()`
-                    3. [`Bean`属性赋值]:`populateBean(beanName, mbd, instanceWrapper);`
+                    2. [让`MergedBeanDefinitionPostProcessor`修改`bean`定义]`applyMergedBeanDefinitionPostProcessors(mbd, beanType, beanName);`,调用`[MergedBeanDefinitionPostProcessor]`的`postProcessMergedBeanDefinition()`,例如`AutowiredAnnotationBeanPostProcessor`
+                    3. 提前暴露一个`ObjectFactory`,用于解决循环依赖问题:`addSingletonFactory(beanName, () -> getEarlyBeanReference(beanName, mbd, bean));`
+                    4. [`Bean`属性赋值]:`populateBean(beanName, mbd, instanceWrapper);`
                         1.赋值之前,拿到`InstantiationAwareBeanPostProcessor`执行`postProcessAfterInstantiation()`方法
                         2. 拿到`InstantiationAwareBeanPostProcessor`执行`postProcessPropertyValues()`方法
                         3. 应用`Bean`属性值:为属性利用setter方法赋值`applyPropertyValues(beanName, mbd, bw, pvs);`
-                    4. [`Bean`初始化]:`initializeBean(beanName, exposedObject, mbd);`
-                        1. `invokeAwareMethods(beanName, bean);`执行`xxxAweare`接口方法
-                        2. `applyBeanPostProcessorsBeforeInitialization(wrappedBean, beanName);`
-                        3. `invokeInitMethods(beanName, wrappedBean, mbd);`
-                        4. `applyBeanPostProcessorsAfterInitialization(wrappedBean, beanName);`
+                    5. [`Bean`初始化]:`initializeBean(beanName, exposedObject, mbd);`
+                        1. [执行Aware接口方法]`invokeAwareMethods(beanName, bean);`执行`xxxAweare`接口方法
+                        2. [执行后置处理器初始化之前方法]`applyBeanPostProcessorsBeforeInitialization(wrappedBean, beanName);`
+                        3. [执行初始化方法]`invokeInitMethods(beanName, wrappedBean, mbd);`,`InitializingBean`/`init`方法
+                        4. [执行后置处理器初始化之后方法]`applyBeanPostProcessorsAfterInitialization(wrappedBean, beanName);`
+                    6. [注册`Bean`销毁方法]registerDisposableBeanIfNecessary(beanName, bean, mbd);
+    4. 判断是否是`SmartInitializingSingleton`,如果是,执行`smartSingleton.afterSingletonsInstantiated();`
 
-// TODO
+### `finishRefresh();`完成`BeanFactory`的初始化创建工作
 
-### `finishRefresh();`
+1. `clearResourceCaches();`
+2. `initLifecycleProcessor();`
+3. `getLifecycleProcessor().onRefresh()`;
+4. `publishEvent(new ContextRefreshedEvent(this));`
+5. `LiveBeansView.registerApplicationContext(this);`
