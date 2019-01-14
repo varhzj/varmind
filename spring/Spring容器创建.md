@@ -174,7 +174,7 @@ MergedBeanDefinitionPostProcessor [internalPostProcessors]
                 }
                 ```
                 1. `createBean(beanName, mbd, args);`
-                2. `Object bean = resolveBeforeInstantiation(beanName, mbdToUse);` 让`[InstantiationAwareBeanPostProcessor]`可以提前执行,返回一个代理对象:先触发`postProcessBeforeInstantiation(beanClass, beanName);`,如果有返回值,再执行:`postProcessAfterInitialization(result, beanName);`
+                2. `Object bean = resolveBeforeInstantiation(beanName, mbdToUse);` 让`[InstantiationAwareBeanPostProcessor]`可以提前执行,返回一个代理对象:先触发`postProcessBeforeInstantiation(beanClass, beanName);`[`AbstractAutoProxyCreator`尝试创建代理],如果有返回值,再执行:`postProcessAfterInitialization(result, beanName);`
                 3. 如果`InstantiationAwareBeanPostProcessor`没有返回代理对象,进入第4步
                 4. `Object beanInstance = doCreateBean(beanName, mbdToUse, args);`创建`Bean`
                     1. [创建`Bean`实例]:`createBeanInstance(beanName, mbd, args);` 实例化`Bean`,利用工厂方法或者对象的构造器创建出`Bean`实例
@@ -188,7 +188,7 @@ MergedBeanDefinitionPostProcessor [internalPostProcessors]
                         1. [执行Aware接口方法]`invokeAwareMethods(beanName, bean);`执行`xxxAweare`接口方法
                         2. [执行后置处理器初始化之前方法]`applyBeanPostProcessorsBeforeInitialization(wrappedBean, beanName);`
                         3. [执行初始化方法]`invokeInitMethods(beanName, wrappedBean, mbd);`,`InitializingBean`/`init`方法
-                        4. [执行后置处理器初始化之后方法]`applyBeanPostProcessorsAfterInitialization(wrappedBean, beanName);`
+                        4. [执行后置处理器初始化之后方法]`applyBeanPostProcessorsAfterInitialization(wrappedBean, beanName);`,[注解方式aop`AnnotationAwareAspectJAutoProxyCreator[AbstractAutoProxyCreator]`创建代理对象]
                     6. [注册`Bean`销毁方法]registerDisposableBeanIfNecessary(beanName, bean, mbd);
     4. 判断是否是`SmartInitializingSingleton`,如果是,执行`smartSingleton.afterSingletonsInstantiated();`
 
